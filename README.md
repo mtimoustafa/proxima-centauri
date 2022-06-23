@@ -2,4 +2,4 @@
 
 For now, a map generator in Phaser + JS
 
-_This is really dirty code, I know, and I'm very sorry__
+_This is really dirty code, I know, and I'm very sorry_

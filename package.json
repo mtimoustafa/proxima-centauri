@@ -9,11 +9,8 @@
     "exp": "nodemon ./express.js"
   },
   "dependencies": {
-    "express": "^4.18.1",
     "http-server": "^14.1.1",
-    "nodemon": "^2.0.17",
-    "quick-perlin-noise-js": "^1.0.3",
-    "simplex-noise": "^3.0.1"
+    "quick-perlin-noise-js": "^1.0.3"
   },
   "devDependencies": {}
 }
