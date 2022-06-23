@@ -2,15 +2,13 @@
   "name": "proxima-centauri",
   "version": "0.1.0",
   "main": "index.js",
-  "license": "MIT",
+  "license": "GPL-3.0-or-later",
   "type": "module",
   "scripts": {
-    "dev": "http-server -c-1",
-    "exp": "nodemon ./express.js"
+    "dev": "http-server -c-1"
   },
   "dependencies": {
     "http-server": "^14.1.1",
     "quick-perlin-noise-js": "^1.0.3"
-  },
-  "devDependencies": {}
+  }
 }

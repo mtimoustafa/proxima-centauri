@@ -17,7 +17,6 @@ function preload() { }
 function create() {
   generateMap({
     phaser: this,
-    // seaLevel: 0.0,
   })
 }
 
@@ -25,7 +24,7 @@ class NoiseGenerator {
   #generators
   #octaves
 
-  constructor({ octaves = [1.0, 0.5, 0.25] }) {
+  constructor({ octaves = [1.0, 0.25] }) {
     this.#generators = []
     this.#octaves = octaves
 
@@ -63,10 +62,10 @@ class NoiseGenerator {
     return this.#smooth(noiseValue)
   }
 
-  // Stolen from https://github.com/junegunn/perlin_noise/blob/master/lib/perlin/curve.rb#L7
+  // Stolen from https://github.com/junegunn/perlin_noise/blob/master/lib/perlin/curve.rb
   #smooth(x, passes = 1) {
     for (let i = 0; i <= passes; i ++) {
-      x = 6 * (x ** 5) - 15 * (x ** 4) + 10 * (x ** 3)
+      x = 3.15 * (x ** 2) - 2.3 * (x ** 3) // modified cubic curve with lower peak
     }
 
     return x
@@ -75,9 +74,9 @@ class NoiseGenerator {
 
 function generateMap({
   phaser,
-  tileSize = 5,
-  frequency = 0.0045,
-  seaLevel = 0.6,
+  tileSize = 10,
+  frequency = 0.004,
+  seaLevel = 0.5,
 }) {
   const noiseGenerator = new NoiseGenerator({})
 
@@ -98,8 +97,9 @@ function generateMap({
   }
 }
 
-function colorTile({ noiseValue, seaLevel }) {
-  const terrainColor = 0xffffff
+function colorTile({ noiseValue, seaLevel, mountainLevel = 0.8 }) {
+  const terrainColor = 0x83f28f
+  const snowColor = 0xffffff
   const coastColor = 0x3792cb
   const seaColor = 0x296d98
   const oceanColor = 0x1c4966
@@ -112,9 +112,10 @@ function colorTile({ noiseValue, seaLevel }) {
   if (noiseValue < oceanDepthStart) color = oceanColor
   else if (noiseValue < seaDepthStart) color = seaColor
   else if (noiseValue < seaLevel) color = coastColor
+  else if (noiseValue > mountainLevel) color = snowColor
   else {
     color = terrainColor
-    opacity = (noiseValue - seaLevel) / (1 - seaLevel)
+    opacity = 1 - ( (noiseValue - seaLevel) / (1 - seaLevel) )
   }
 
   return { color, opacity }
